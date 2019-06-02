@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import unittest
 import wikipediaapi
 
-from mock_data import wikipedia_api_request
+from tests.mock_data import wikipedia_api_request
 
 
 class TestHtmlFormatExtracts(unittest.TestCase):
@@ -24,7 +23,7 @@ class TestHtmlFormatExtracts(unittest.TestCase):
 
     def test_title_after_fetching(self):
         page = self.wiki.page('Test_1')
-        page._fetch('structured')
+        page._fetch('extracts')
         self.assertEqual(page.title, 'Test 1')
 
     def test_summary(self):

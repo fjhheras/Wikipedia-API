@@ -19,9 +19,15 @@ pypi-html:
 
 run-tests:
 	python3 -m unittest discover tests/ '*test.py'
-	
+
 run-type-check:
 	mypy ./example.py
+
+run-flake8:
+	flake8 --max-line-length=100 wikipediaapi tests
+
+run-tox:
+	tox
 
 run-coverage:
 	coverage run --source=wikipediaapi -m unittest discover tests/ '*test.py'
@@ -33,7 +39,8 @@ requirements:
 requirements-dev:
 	pip3 install -r requirements-dev.txt
 
-pre-release-check: run-tests run-coverage pypi-html run-type-check
+pre-release-check: run-type-check run-flake8 run-coverage pypi-html run-tox
+	echo "Pre-release check was successful"
 
 release: pre-release-check
 	if [ "x$(MSG)" = "x" -o "x$(VERSION)" = "x" ]; then \
@@ -78,7 +85,6 @@ release: pre-release-check
 	sed -ri 's/version=.*/version="'$(VERSION)'",/' setup.py; \
 	sed -ri 's/^release = .*/release = "'$(VERSION)'"/' conf.py; \
 	sed -ri 's/^version = .*/version = "'$$short_VERSION'"/' conf.py; \
-	sed -ri 's/^Current version is: .*/Current version is: "'$(VERSION)'"/' wikipediaapi/__init__.py; \
 	sed -ri 's/^__version__ = .*/__version__ = ('"$$commas_VERSION"')/' wikipediaapi/__init__.py; \
 	git commit setup.py conf.py wikipediaapi/__init__.py -m "Update version to $(VERSION) for new release."; \
 	git push; \

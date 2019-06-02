@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import unittest
 import wikipediaapi
 
-from mock_data import wikipedia_api_request
+from tests.mock_data import wikipedia_api_request
 
 
 class TestWikiFormatExtracts(unittest.TestCase):
@@ -21,7 +20,7 @@ class TestWikiFormatExtracts(unittest.TestCase):
 
     def test_title_after_fetching(self):
         page = self.wiki.page('Test_1')
-        page._fetch('structured')
+        page._fetch('extracts')
         self.assertEqual(page.title, 'Test 1')
 
     def test_summary(self):
@@ -95,5 +94,21 @@ class TestWikiFormatExtracts(unittest.TestCase):
                 "Text for section 5\n\n" +
                 "Section 5.1\n" +
                 "Text for section 5.1"
+            )
+        )
+
+    def test_text_and_summary_without_sections(self):
+        page = self.wiki.page('No_Sections')
+        self.maxDiff = None
+        self.assertEqual(
+            page.text,
+            (
+                "Summary text"
+            )
+        )
+        self.assertEqual(
+            page.summary,
+            (
+                "Summary text"
             )
         )

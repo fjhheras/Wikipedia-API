@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import unittest
 import wikipediaapi
 
-from mock_data import wikipedia_api_request
+from tests.mock_data import wikipedia_api_request
 
 
 class TestLangLinks(unittest.TestCase):
@@ -50,3 +49,7 @@ class TestLangLinks(unittest.TestCase):
         p1 = langlinks['l1']
         self.assertEqual(p1.language, 'l1')
         self.assertEqual(p1.pageid, 10)
+
+    def test_langlinks_no_langlink_count(self):
+        page = self.wiki.page('No_LangLinks')
+        self.assertEqual(len(page.langlinks), 0)

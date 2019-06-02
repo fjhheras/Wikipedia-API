@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import unittest
 
-from mock_data import wikipedia_api_request
+from tests.mock_data import wikipedia_api_request
 import wikipediaapi
 
 
@@ -32,3 +31,7 @@ class TestLinks(unittest.TestCase):
             list(sorted(map(lambda s: s.title, page.links.values()))),
             ['Title - ' + str(i + 1) for i in range(5)]
         )
+
+    def test_links_no_links_count(self):
+        page = self.wiki.page('No_Links')
+        self.assertEqual(len(page.links), 0)

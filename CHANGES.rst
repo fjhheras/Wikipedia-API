@@ -1,10 +1,80 @@
 Changelog
 =========
 
+0.5.1
+-----
+
+* Adds tox for testing different Python versions
+
+0.5.0
+-----
+
+* Allows modifying API call parameters
+* Fixes `Issue 16`_ - hidden categories
+* Fixes `Issue 21`_ - summary extraction
+
+.. _Issue 16: https://github.com/martin-majlis/Wikipedia-API/issues/16
+.. _Issue 21: https://github.com/martin-majlis/Wikipedia-API/issues/21
+
+
+0.4.5
+-----
+
+* Handles missing sections correctly
+* Fixes `Issue 20`_
+
+.. _Issue 20: https://github.com/martin-majlis/Wikipedia-API/issues/20
+
+
+0.4.4
+-----
+* Uses HTTPS directly instead of HTTP to avoid redirect
+
+0.4.3
+-----
+* Correctly extracts text from pages without sections
+* Adds support for quoted page titles
+
+.. code:: python
+
+    api = wikipediaapi.Wikipedia(
+        language='hi',
+    )
+    python = api.article(
+        title='%E0%A4%AA%E0%A4%BE%E0%A4%87%E0%A4%A5%E0%A4%A8',
+        unquote=True,
+    )
+    print(python.summary)
+
+0.4.2
+-----
+* Adds support for Python 3.4 by not using f-strings
+
+0.4.1
+-----
+* Uses code style enforced by flake8
+* Increased code coverage
+
+0.4.0
+-----
+* Uses type annotations => minimal requirement is now Python 3.5
+* Adds possibility to use more parameters for `request`_. For example:
+
+.. code:: python
+
+    api = wikipediaapi.Wikipedia(
+        language='en',
+        proxies={'http': 'http://localhost:1234'}
+    )
+
+* Extends documentation
+
+.. _request: http://docs.python-requests.org/en/master/api/#requests.request
+
 0.3.4
 -----
-* Added support for `property Categorymembers`_
-* Added property ``text`` for retrieving complete text of the page
+* Adds support for `property Categorymembers`_
+* Adds property ``text`` for retrieving complete text of the page
 
 .. _property Categorymembers: https://www.mediawiki.org/wiki/API:Categorymembers
 

@@ -58,9 +58,11 @@ print("Categories")
 print_categories(page_py)
 
 section_py = page_py.section_by_title('Features and philosophy')
-print("Section - Title: %s" % section_py.title)
-print("Section - Text: %s" % section_py.text[0:60])
-
+if section_py is not None:
+    print("Section - Title: %s" % section_py.title)
+    print("Section - Text: %s" % section_py.text[0:60])
+else:
+    print("Section does not exist.")
 
 wiki_html = wikipediaapi.Wikipedia(
     language='cs',
@@ -75,8 +77,11 @@ print("Page - Summary: %s" % page_ostrava.summary[0:60])
 print_sections(page_ostrava.sections)
 
 section_ostrava = page_ostrava.section_by_title('Heraldický znak')
-print("Section - Title: %s" % section_ostrava.title)
-print("Section - Text: %s" % section_ostrava.text[0:60])
+if section_ostrava is not None:
+    print("Section - Title: %s" % section_ostrava.title)
+    print("Section - Text: %s" % section_ostrava.text[0:60])
+else:
+    print("Section does not exists")
 
 page_nonexisting = wiki_wiki.page('Wikipedia-API-FooBar')
 print("Page - Exists: %s" % page_nonexisting.exists())
@@ -98,10 +103,22 @@ print(en_page.summary[0:60])
 def print_categorymembers(categorymembers, level=0, max_level=2):
     for c in categorymembers.values():
         print("%s %s (ns: %d)" % ("*" * (level + 1), c.title, c.ns))
-        if c.ns == wikipediaapi.Namespace.CATEGORY and level <= max_level:
-            print_categorymembers(c.categorymembers, level + 1)
+        if c.ns == wikipediaapi.Namespace.CATEGORY and level < max_level:
+            print_categorymembers(c.categorymembers, level + 1, max_level=max_level)
 
 
 cat = wiki_wiki.page("Category:Physics")
 print("Category members: Category:Physics")
-print_categorymembers(cat.categorymembers)
+print_categorymembers(cat.categorymembers, max_level=1)
+
+wiki_hi = wikipediaapi.Wikipedia('hi')
+# fetch page about Python in Hindu
+# https://hi.wikipedia.org/wiki/%E0%A4%AA%E0%A4%BE%E0%A4%87%E0%A4%A5%E0%A4%A8
+
+p_hi_python_quoted = wiki_hi.article(
+    title='%E0%A4%AA%E0%A4%BE%E0%A4%87%E0%A4%A5%E0%A4%A8',
+    unquote=True,
+)
+print(p_hi_python_quoted.title)
+print(p_hi_python_quoted.summary[0:60])
+

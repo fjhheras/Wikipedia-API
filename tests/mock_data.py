@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# flake8: noqa
 
 def wikipedia_api_request(page, params):
     query = ""
@@ -54,6 +54,32 @@ _MOCK_DATA = {
                         "Text for section 5\n\n\n" +
                         "=== Section 5.1 ===\n" +
                         "Text for section 5.1\n"
+                    )
+                }
+            }
+        }
+    },
+    'en:action=query&explaintext=1&exsectionformat=wiki&prop=extracts&titles=No_Sections&': {
+        "batchcomplete": "",
+        "warnings": {
+            "extracts": {
+                "*": "\"exlimit\" was too large for a whole article extracts request, lowered to 1."
+            }
+        },
+        "query": {
+            "normalized": [
+                {
+                    "from": "No_Sections",
+                    "to": "No Sections"
+                }
+            ],
+            "pages": {
+                "4": {
+                    "pageid": 5,
+                    "ns": 0,
+                    "title": "No Sections",
+                    "extract": (
+                            "Summary text\n\n\n"
                     )
                 }
             }
@@ -268,6 +294,18 @@ _MOCK_DATA = {
             }
         }
     },
+    'en:action=query&lllimit=500&llprop=url&prop=langlinks&titles=No_LangLinks&': {
+        "batchcomplete": "",
+        "query": {
+            "pages": {
+                "10": {
+                    "pageid": 10,
+                    "ns": 0,
+                    "title": "No LangLinks",
+                }
+            }
+        }
+    },
     'en:action=query&pllimit=500&prop=links&titles=Test_1&': {
         "query": {
             "pages": {
@@ -339,6 +377,17 @@ _MOCK_DATA = {
                             "title": "Title - 5"
                         },
                     ]
+                }
+            }
+        }
+    },
+    'en:action=query&pllimit=500&prop=links&titles=No_Links&': {
+        "query": {
+            "pages": {
+                "4": {
+                    "pageid": 11,
+                    "ns": 0,
+                    "title": "No_Links",
                 }
             }
         }
@@ -431,5 +480,110 @@ _MOCK_DATA = {
             ]
         }
     },
-
+    'en:action=query&cllimit=500&prop=categories&titles=No_Categories&': {
+        "batchcomplete": "",
+        "query": {
+            "pages": {
+                "4": {
+                    "pageid": 4,
+                    "ns": 0,
+                    "title": "Test 1",
+                }
+            }
+        }
+    },
+    'en:action=query&bllimit=500&bltitle=Non_Existent&list=backlinks&': {
+        "query": {
+            "backlinks": [
+            ]
+        }
+    },
+    'en:action=query&bllimit=500&bltitle=Test_1&list=backlinks&': {
+        "query": {
+            "backlinks": [
+                {
+                    "ns": 0,
+                    "title": "Title - 1"
+                },
+                {
+                    "ns": 0,
+                    "title": "Title - 2"
+                },
+                {
+                    "ns": 0,
+                    "title": "Title - 3"
+                },
+            ]
+        }
+    },
+    'en:action=query&bllimit=500&bltitle=Test_2&list=backlinks&': {
+        "continue": {
+            "blcontinue": "5|0|Title_-_4",
+            "continue": "||"
+        },
+        "query": {
+            "backlinks": [
+                {
+                    "ns": 0,
+                    "title": "Title - 1"
+                },
+                {
+                    "ns": 0,
+                    "title": "Title - 2"
+                },
+                {
+                    "ns": 0,
+                    "title": "Title - 3"
+                },
+            ]
+        }
+    },
+    'en:action=query&blcontinue=5|0|Title_-_4&bllimit=500&bltitle=Test_2&list=backlinks&': {
+        "query": {
+            "backlinks": [
+                {
+                    "ns": 0,
+                    "title": "Title - 4"
+                },
+                {
+                    "ns": 0,
+                    "title": "Title - 5"
+                },
+            ]
+        }
+    },
+    'hi:action=query&inprop=protection|talkid|watched|watchers|visitingwatchers|notificationtimestamp|subjectid|url|readable|preload|displaytitle&prop=info&titles=पाइथन&': {
+        "batchcomplete": "",
+        "query": {
+            "pages": {
+                "10": {
+                    "pageid": 10,
+                    "ns": 0,
+                    "title": "पाइथन",
+                    "missing": "",
+                    "contentmodel": "wikitext",
+                    "pagelanguage": "hi",
+                    "pagelanguagehtmlcode": "hi",
+                    "pagelanguagedir": "ltr",
+                    "protection": [
+                        {
+                            "type": "create",
+                            "level": "sysop",
+                            "expiry": "infinity"
+                        }
+                    ],
+                    "restrictiontypes": [
+                        "create"
+                    ],
+                    "notificationtimestamp": "",
+                    "fullurl": "https://l1.wikipedia.org/wiki/Test 1 - 1",
+                    "editurl": "https://l1.wikipedia.org/w/index.php?title=Test 1 - 1&action=edit",
+                    "canonicalurl": "https://l1.wikipedia.org/wiki/Test 1 - 1",
+                    "readable": "",
+                    "preload": None,
+                    "displaytitle": "पाइथन"
+                }
+            }
+        }
+    },
 }
